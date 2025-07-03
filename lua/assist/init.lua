@@ -13,7 +13,8 @@ function M.setup(config)
       local q = lines[1]
       local a = chat.ask(q)
       if a then
-        vim.print(a)
+        -- open a scratch buffer with the result.
+        vim.print(a) 
       end
     end) 
   end, {})

@@ -1,18 +1,26 @@
 local M = {}
 
-M.messages = {}
+M.messages = {
+  {
+    role = "system",
+    content = "You are a code and math specialist, All your answers should be in markdown. Only provide code examples and no commentary",
+  }
+}
 
 function M.setup(config)
   
 end
 
-function add_message(role, value)
-  value = string.gsub(value, '\'', "")
-  value = string.gsub(value, '\"', "")
+function clean_string(str)
+  str = str.gsub(str, '\'', '')
+  str = str.gsub(str, '\"', '')
+  return str
+end
 
+function add_message(role, value)
   local message = {
     role = role,
-    content = value
+    content = clean_string(value)
   }
   table.insert(M.messages, message)
 end 
@@ -34,8 +42,7 @@ function M.ask(question)
   end
 
   local data = vim.json.decode(response)
-  local answer = string.gsub(data.message.content, '\'', "")
-  answer = string.gsub(answer, '\"', "")
+  local answer = clean_string(data.message.content)
   add_message("assistant", answer)
   return answer
 end

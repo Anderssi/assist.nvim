@@ -1,6 +1,6 @@
 local M = {}
 
-local function create_floating_window(opts, enter)
+function M.create_floating_window(opts, enter)
   if enter == nil then
     enter = false
   end
@@ -25,7 +25,7 @@ function M.prompt(on_confirm)
     noautocmd = false,
     title="Enter your input:",
   }
-  local prompt_obj = create_floating_window(config, true)
+  local prompt_obj = M.create_floating_window(config, true)
 
   vim.cmd([[startinsert!]])
 
