@@ -2,6 +2,7 @@ local M = {}
 
 function M.setup(config)
   local utils = require('assist.utils')
+  local chat = require('assist.chat')
 
   if not config then
     config = {}
@@ -9,8 +10,11 @@ function M.setup(config)
 
   vim.api.nvim_create_user_command('AssistPrompt', function ()
     utils.prompt(function (lines)
-      local value = lines[1]
-      vim.print(value)
+      local q = lines[1]
+      local a = chat.ask(q)
+      if a then
+        vim.print(a)
+      end
     end) 
   end, {})
 

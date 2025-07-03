@@ -11,6 +11,7 @@ local function create_floating_window(opts, enter)
   return { win = win, buf = buf }
 end
 
+-- Open a prompt
 function M.prompt(on_confirm)
   local config = {
     relative = 'editor',
@@ -26,7 +27,7 @@ function M.prompt(on_confirm)
   }
   local prompt_obj = create_floating_window(config, true)
 
-  vim.cmd([[startinsert!]])    -- Switch to insert mode in the new window
+  vim.cmd([[startinsert!]])
 
   vim.keymap.set('n', '<CR>', function ()
     local result = vim.api.nvim_buf_get_lines(prompt_obj.buf, 0, -1, false)
