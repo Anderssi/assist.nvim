@@ -1,33 +1,28 @@
 local M = {}
 
-M.messages = {
-  {
-    role = "system",
-    content = "You are a code and math specialist, All your answers should be in markdown. Only provide code examples and no commentary",
-  }
-}
+M.messages = {}
 
-function M.setup(config)
-  
-end
+function M.setup(config) end
 
 function clean_string(str)
-  str = str.gsub(str, '\'', '')
-  str = str.gsub(str, '\"', '')
+  str = str.gsub(str, "'", "")
+  str = str.gsub(str, '"', "")
+
   return str
 end
 
 function add_message(role, value)
   local message = {
     role = role,
-    content = clean_string(value)
+    content = clean_string(value),
   }
+
   table.insert(M.messages, message)
-end 
+end
 
 function M.ask(question)
   add_message("user", question)
-  
+
   local payload = vim.json.encode({
     model = "deepseek-coder-v2:16b",
     messages = M.messages,
@@ -43,7 +38,9 @@ function M.ask(question)
 
   local data = vim.json.decode(response)
   local answer = clean_string(data.message.content)
+
   add_message("assistant", answer)
+
   return answer
 end
 

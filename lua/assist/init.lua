@@ -1,24 +1,24 @@
 local M = {}
 
 function M.setup(config)
-  local utils = require('assist.utils')
-  local chat = require('assist.chat')
+  local utils = require("assist.utils")
+  local chat = require("assist.chat")
 
   if not config then
     config = {}
   end
 
-  vim.api.nvim_create_user_command('AssistPrompt', function ()
-    utils.prompt(function (lines)
+  vim.api.nvim_create_user_command("AssistPrompt", function()
+    utils.prompt(function(lines)
       local q = lines[1]
       local a = chat.ask(q)
+
       if a then
         -- open a scratch buffer with the result.
-        vim.print(a) 
+        vim.print(a)
       end
-    end) 
+    end)
   end, {})
-
 end
 
 return M
