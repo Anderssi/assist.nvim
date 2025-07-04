@@ -13,12 +13,14 @@ end
 
 -- Open a prompt
 function M.prompt(on_confirm)
+  local width = 40
+  local height = 1  
   local config = {
     relative = 'editor',
-    row = 1,
-    col = 10,
-    width = 40,
-    height = 5,
+    row = math.floor((vim.o.lines - height) / 2),
+    col = math.floor((vim.o.columns - width) / 2),
+    width = width,
+    height = height,
     style = 'minimal',
     border = 'rounded',
     focusable = true,
